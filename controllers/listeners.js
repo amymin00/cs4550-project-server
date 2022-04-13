@@ -13,15 +13,15 @@ const findAllListeners = async (req, res) => {
 }  
 
 const updateListener = async (req, res) => {
-    const ListenerdIdToUpdate = req.params.id;
+    const listenersIdToUpdate = req.params.id;
     const updatedListener = req.body;
-    const status = await listenersDao.updateListener(listenerdIdToUpdate, updatedListener);
+    const status = await listenersDao.updateListener(listenersIdToUpdate, updatedListener);
     res.send(status);
 }
 
 const deleteListener = async (req, res) => {
-    const listenerdIdToDelete = req.params.id;
-    const status = await listenersDao.deleteListener(listenerdIdToDelete);
+    const listenersIdToDelete = req.params.id;
+    const status = await listenersDao.deleteListener(listenersIdToDelete);
     res.send(status);
 }   
 
