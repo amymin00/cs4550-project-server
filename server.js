@@ -2,9 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import listenersController from './controllers/listeners.js';
+import usersController from './controllers/users.js';
 import postsController from './controllers/posts.js';
-import creatorsController from './controllers/creators.js';
 import groupsController from './controllers/groups.js';
 import commentsController from './controllers/comments.js';
 
@@ -19,9 +18,8 @@ app.use(cors());
 app.use(express.json());
 
 // Add endpoints for various APIs
-listenersController(app);
+usersController(app);
 postsController(app);
-creatorsController(app);
 groupsController(app);
 commentsController(app);
 

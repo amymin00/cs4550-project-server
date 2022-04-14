@@ -2,15 +2,17 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const listenersSchema = new Schema({
+const usersSchema = new Schema({
     name: String,
-    listenername: String,
+    username: String,
     password: String,
+    creator: Boolean,
     biography: String,
     image: String,
+    songs: [String],
     playlists: [String],
     followers: [mongoose.Types.ObjectId],
     followees: [mongoose.Types.ObjectId],
-}, {collection: 'listeners'});
+}, {collection: 'users'});
 
-export default listenersSchema;
+export default usersSchema;

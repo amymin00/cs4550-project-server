@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const groupsSchema = new Schema({
     name: String,
     topic: String,
-    members: [mongoose.Types.ObjectId], // list of listeners
+    members: [mongoose.Types.ObjectId], // list of users
     posts: [mongoose.Types.ObjectId],
 }, {collection: 'groups'});
 
