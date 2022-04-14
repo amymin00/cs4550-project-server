@@ -2,14 +2,16 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
+// Needs from frontend: [title (of post), author, song, text]
 const postsSchema = new Schema({
+    _id: String,
     title: String,
-    poster: mongoose.Types.ObjectId,
-    timestamp: Date,
+    author: String, // list of user ids
+    timestamp: Date, // filled in controller
     song: String,
     text: String,
-    liked: [mongoose.Types.ObjectId],
-    comments: [mongoose.Types.ObjectId],
+    likes: [String], // list of user ids, filled in controller
+    comments: [String], // list of comment ids, filled in controller
 }, {collection: 'posts'});
 
 export default postsSchema;

@@ -1,8 +1,15 @@
+import { nanoid } from 'nanoid';
 import * as usersDao from '../daos/users.js';
 
 const createUser = async (req, res) => {
     const newUser = req.body;
-    newUser.likes = 0;
+    newUser._id = nanoid();
+    newUser.biography = '';
+    newUser.image = ''; // 
+    newUser.songs = [];
+    newUser.playlists = [];
+    newUser.followers = [];
+    newUser.following = [];
     const insertedUser = await usersDao.createUser(newUser);
     res.json(insertedUser);
 }

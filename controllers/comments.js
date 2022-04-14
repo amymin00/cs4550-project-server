@@ -1,8 +1,10 @@
+import { nanoid } from 'nanoid';
 import * as commentsDao from '../daos/comments.js';
 
 const createComment = async (req, res) => {
     const newComment = req.body;
-    newComment.likes = 0;
+    newComment._id = nanoid();
+    newComment.timeStamp = (new Date()).getTime();
     const insertedComment = await commentsDao.createComment(newcomment);
     res.json(insertedComment);
 }

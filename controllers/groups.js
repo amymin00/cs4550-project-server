@@ -1,10 +1,13 @@
+import { nanoid } from 'nanoid';
 import * as groupsDao from '../daos/groups.js';
 
 const createGroup = async (req, res) => {
-    const newCroup = req.body;
-    newCroup.likes = 0;
-    const insertedCroup = await groupsDao.createGroup(newCroup);
-    res.json(insertedCroup);
+    const newGroup = req.body;
+    newGroup._id = nanoid();
+    newGroup.members = [];
+    newGroup.posts = [];
+    const insertedGroup = await groupsDao.createGroup(newGroup);
+    res.json(insertedGroup);
 }
 
 const findAllGroups = async (req, res) => {
@@ -14,8 +17,8 @@ const findAllGroups = async (req, res) => {
 
 const updateGroup = async (req, res) => {
     const groupdIdToUpdate = req.params.id;
-    const updatedCroup = req.body;
-    const status = await groupsDao.updateGroup(groupdIdToUpdate, updatedCroup);
+    const updatedGroup = req.body;
+    const status = await groupsDao.updateGroup(groupdIdToUpdate, updatedGroup);
     res.send(status);
 }
 

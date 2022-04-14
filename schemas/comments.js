@@ -2,9 +2,11 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
+// Needs from frontend: [author, text]
 const commentsSchema = new Schema({
-    poster: mongoose.Types.ObjectId,
-    timestamp: Date,
+    _id: String, // filled in the controller
+    author: String, // user id
+    timestamp: Date, // filled in the controller
     text: String,
 }, {collection: 'comments'});
 
