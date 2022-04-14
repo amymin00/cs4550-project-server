@@ -3,9 +3,12 @@ import * as commentsDao from '../daos/comments.js';
 
 const createComment = async (req, res) => {
     const newComment = req.body;
+    // if _id is a duplicate (check error message for which key is duplicated),
+    // then ask user to just submit request again
+    // otherwise, notify user that so-and-so field must be changed
     newComment._id = nanoid();
     newComment.timeStamp = (new Date()).getTime();
-    const insertedComment = await commentsDao.createComment(newcomment);
+    const insertedComment = await commentsDao.createComment(newComment);
     res.json(insertedComment);
 }
 

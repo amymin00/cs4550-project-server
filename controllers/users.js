@@ -3,14 +3,15 @@ import * as usersDao from '../daos/users.js';
 
 const createUser = async (req, res) => {
     const newUser = req.body;
+    // if _id is a duplicate (check error message for which key is duplicated),
+    // then ask user to just submit request again
+    // otherwise, notify user that so-and-so field must be changed
     newUser._id = nanoid();
     newUser.biography = '';
-    newUser.image = ''; // 
     newUser.songs = [];
     newUser.playlists = [];
     newUser.followers = [];
-    newUser.following = [];
-    const insertedUser = await usersDao.createUser(newUser);
+    newUser.following = [];    
     res.json(insertedUser);
 }
 

@@ -3,6 +3,9 @@ import * as groupsDao from '../daos/groups.js';
 
 const createGroup = async (req, res) => {
     const newGroup = req.body;
+    // if _id is a duplicate (check error message for which key is duplicated),
+    // then ask user to just submit request again
+    // otherwise, notify user that so-and-so field must be changed
     newGroup._id = nanoid();
     newGroup.members = [];
     newGroup.posts = [];
