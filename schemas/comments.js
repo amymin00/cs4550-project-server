@@ -5,16 +5,16 @@ const { Schema } = mongoose;
 // Needs from frontend: [author, text]
 const commentsSchema = new Schema({
     _id: String, // filled in the controller
-    author: {
+    author: { // user id
         type: String,
         required: true,
         immutable: true,
-    }, // user id
-    timestamp: {
+    }, 
+    timestamp: { // filled in the controller
         type: Number,
         required: true,
         immutable: true,
-    }, // filled in the controller
+    }, 
     text: {
         type: String,
         required: true,

@@ -10,30 +10,30 @@ const postsSchema = new Schema({
         required: true,
         immutable: true,
     },
-    author: {
+    author: { // list of user ids
         type: String,
         required: true,
         immutable: true,
-    }, // list of user ids
-    timestamp: {
+    }, 
+    timestamp: { // filled in controller
         type: Number,
         required: true,
         immutable: true,
-    }, // filled in controller
+    }, 
     song: {
         type: String,
         required: true,
         immutable: true,
     },
     text: String,
-    likes: {
+    likes: { // list of user ids, filled in controller
         type: [String],
         required: true,
-    }, // list of user ids, filled in controller
-    comments: {
+    }, 
+    comments: { // list of comment ids, filled in controller
         type: [String],
         required: true,
-    }, // list of comment ids, filled in controller
+    }, 
 }, {collection: 'posts'});
 
 export default postsSchema;

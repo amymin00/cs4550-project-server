@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import usersController from './controllers/users.js';
 import postsController from './controllers/posts.js';
-import groupsController from './controllers/groups.js';
 import commentsController from './controllers/comments.js';
 
 const username = process.env.MONGO_USER;
@@ -20,7 +19,6 @@ app.use(express.json());
 // Add endpoints for various APIs
 usersController(app);
 postsController(app);
-groupsController(app);
 commentsController(app);
 
 app.listen(process.env.PORT || 4000);

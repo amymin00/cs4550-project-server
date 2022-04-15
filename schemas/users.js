@@ -24,22 +24,18 @@ const usersSchema = new Schema({
     },
     // all of below filled in controller
     biography: String, 
-    songs: {
+    songs: { // list of song ids taken from Spotify's Web API -- saved by users, created by creators
         type: [String],
         required: true,
-    }, // list of song ids taken from Spotify's Web API - intended for creators only
-    playlists: {
+    }, 
+    followers: { // list of user ids
         type: [String],
         required: true,
-    }, // list of playlist ids taken from Spotify's Web API
-    followers: {
+    }, 
+    following: { // list of user ids
         type: [String],
         required: true,
-    }, // list of user ids
-    following: {
-        type: [String],
-        required: true,
-    }, // list of user ids
+    }, 
 }, {collection: 'users'});
 
 export default usersSchema;
