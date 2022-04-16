@@ -3,11 +3,8 @@ import * as postsDao from '../daos/posts.js';
 
 const createPost = async (req, res) => {
     const newPost = req.body;
-    // if _id is a duplicate (check error message for which key is duplicated),
-    // then ask user to just submit request again
-    // otherwise, notify user that so-and-so field must be changed
     newPost._id = nanoid();
-    newPost.timeStamp = (new Date()).getTime();
+    newPost.timestamp = (new Date()).getTime();
     newPost.likes = [];
     newPost.comments = [];
     const insertedPost = await postsDao.createPost(newPost);
