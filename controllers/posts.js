@@ -14,7 +14,19 @@ const createPost = async (req, res) => {
 const findAllPosts = async (req, res) => {
     const posts = await postsDao.findAllPosts();
     res.json(posts);
-}  
+}
+
+const findPost = async (req, res) => {
+    const postToFind = req.params.id;
+    const post = await postsDao.findPost(postToFind);
+    res.json(post);
+}
+
+const findPostsByAuthor = async (req, res) => {
+    const authorId = req.params.id;
+    const posts = await postsDao.findPostsByAuthor(authorId);
+    res.json(posts);
+}
 
 const updatePost = async (req, res) => {
     const postdIdToUpdate = req.params.id;
@@ -32,6 +44,8 @@ const deletePost = async (req, res) => {
 export default app => {
     app.post('/api/posts', createPost);
     app.get('/api/posts', findAllPosts);
+    app.get('/api/posts/:id', findPost);
+    app.get('/api/posts/author/:id', findPostsByAuthor);
     app.put('/api/posts/:id', updatePost);
     app.delete('/api/posts/:id', deletePost);
 }

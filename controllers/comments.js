@@ -12,7 +12,13 @@ const createComment = async (req, res) => {
 const findAllComments = async (req, res) => {
     const comments = await commentsDao.findAllComments();
     res.json(comments);
-}  
+}
+
+const findComment = async (req, res) => {
+    const commentToFind = req.params.id;
+    const comment = await commentsDao.findComment(commentToFind);
+    res.json(comment);
+}
 
 const updateComment = async (req, res) => {
     const commentdIdToUpdate = req.params.id;
@@ -30,6 +36,7 @@ const deleteComment = async (req, res) => {
 export default app => {
     app.post('/api/comments', createComment);
     app.get('/api/comments', findAllComments);
+    app.get('/api/comments/:id', findComment);
     app.put('/api/comments/:id', updateComment);
     app.delete('/api/comments/:id', deleteComment);
 }
