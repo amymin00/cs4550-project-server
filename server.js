@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import session from 'express-session';
 import 'dotenv/config';
 import usersController from './controllers/users.js';
 import postsController from './controllers/posts.js';
@@ -13,8 +14,26 @@ mongoose.connect(uri);
 
 // Use middleware
 const app = express();
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: 'http://localhost:3000'
+}));
 app.use(express.json());
+
+// session middleware
+const sess = {
+    secret: process.env.SESSION_SECRET,
+    cookie: {},
+    resave: true,
+    saveUninitialized: true,
+};
+
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1); // trust first proxy
+    sess.cookie.secure = true; // serve secure cookies
+}
+
+app.use(session(sess));
 
 // Add endpoints for various APIs
 usersController(app);
