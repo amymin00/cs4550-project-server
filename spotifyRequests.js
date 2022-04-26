@@ -1,8 +1,5 @@
 import axios from 'axios';
 import qs from 'qs';
-// var request = require('request'); // "Request" library
-// var axios = require('axios');
-// var qs = require('qs');
 
 // let token = '';
 
