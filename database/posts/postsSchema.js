@@ -29,10 +29,12 @@ const postsSchema = new Schema({
     likes: { // list of user ids, filled in controller
         type: [String],
         required: true,
+        default: [],
     }, 
     comments: { // list of comment ids, filled in controller
         type: [String],
         required: true,
+        comments: [],
     }, 
 }, {collection: 'posts'});
 

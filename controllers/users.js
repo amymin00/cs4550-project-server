@@ -11,16 +11,11 @@ const createUser = async (req, res) => {
         res.sendStatus(403);
     } else {
         newUser._id = nanoid();
-        newUser.biography = '';
-        newUser.songs = [];
-        newUser.playlists = [];
-        newUser.followers = [];
-        newUser.following = [];
         const insertedUser = await usersDao.createUser(newUser);
         req.session['currentUser'] = insertedUser;
         res.json(insertedUser);
     }
-}
+};
 
 const login = async (req, res) => {
     const existingUser = await usersDao.findUserByCredentials(req.body.username, req.body.password);
@@ -31,7 +26,7 @@ const login = async (req, res) => {
     } else {
         return res.sendStatus(503);
     }
-}
+};
   
 const logout = (req, res) => {
     req.session.destroy();
@@ -45,7 +40,7 @@ const profile = (req, res) => {
     } else {
         res.sendStatus(503);
     }
-}
+};
 
 // ------------------------------------------------
 
@@ -53,30 +48,30 @@ const findUsersFollowers = async (req, res) => {
     const user = await usersDao.findUserById(req.params.id);
     const followers = await usersDao.findUsers(user.followers);
     res.json(followers);
-}
+};
 
 const findUsersFollowing = async (req, res) => {
     const user = await usersDao.findUserById(req.params.id);
     const following = await usersDao.findUsers(user.following);
     res.json(following);
-}
+};
 
 const findAllUsers = async (req, res) => {
     const users = await usersDao.findAllUsers();
     res.json(users);
-}
+};
 
 const findUserById = async (req, res) => {
     const userToFind = req.params.id;
     const user = await usersDao.findUserById(userToFind);
     res.json(user);
-}
+};
 
 const findUserByUsername = async (req, res) => {
     const username = req.params.username;
     const user = await usersDao.findUserByUsername(username);
     res.json(user);
-}
+};
 
 const findUserByCredentials = async (req, res) => {
     const crendentials = req.body;
@@ -89,14 +84,14 @@ const findUserByCredentials = async (req, res) => {
     } else {
         res.sendStatus(403);
     }
-}
+};
 
 const updateUser = async (req, res) => {
     const userToUpdate = req.params.id;
     const updatedUser = req.body;
     const status = await usersDao.updateUser(userToUpdate, updatedUser);
     res.send(status);
-}
+};
 
 const deleteUser = async (req, res) => {
     const userId = await req.params.id;
@@ -130,7 +125,7 @@ const deleteUser = async (req, res) => {
 
     const status = await usersDao.deleteUser(user);
     res.send(status);
-}
+};
 
 
 export default app => {
@@ -149,4 +144,4 @@ export default app => {
     app.put('/api/users/:id', updateUser);
 
     app.delete('/api/users/:id', deleteUser);
-}
+};

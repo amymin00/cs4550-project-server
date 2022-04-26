@@ -6,6 +6,7 @@ import 'dotenv/config';
 import usersController from './controllers/users.js';
 import postsController from './controllers/posts.js';
 import commentsController from './controllers/comments.js';
+import songsController from './controllers/songs.js';
 
 const username = process.env.MONGO_USER;
 const password = process.env.MONGO_PW;
@@ -16,9 +17,14 @@ mongoose.connect(uri);
 const app = express();
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000'
+    origin: [
+        'http://localhost:3000', 
+        'http://api.spotify.com'
+    ]
 }));
 app.use(express.json());
+
+// var allowList = ['http://api.spotify.com'];
 
 // session middleware
 const sess = {
@@ -39,5 +45,6 @@ app.use(session(sess));
 usersController(app);
 postsController(app);
 commentsController(app);
+songsController(app);
 
 app.listen(process.env.PORT || 4000);

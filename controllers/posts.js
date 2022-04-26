@@ -5,8 +5,6 @@ const createPost = async (req, res) => {
     const newPost = req.body;
     newPost._id = nanoid();
     newPost.timestamp = (new Date()).getTime();
-    newPost.likes = [];
-    newPost.comments = [];
     const insertedPost = await postsDao.createPost(newPost);
     res.json(insertedPost);
 }
