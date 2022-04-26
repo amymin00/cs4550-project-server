@@ -36,7 +36,7 @@ const getToken = async () => {
 export const searchForSongs = async query => {
     const parsedQuery = query.replaceAll('-', '%20');
 
-    const trackSearchUri = `http://api.spotify.com/v1/search?q=${parsedQuery}&type=track`;
+    const trackSearchUri = `http://api.spotify.com/v1/search?q=${parsedQuery}&type=track&offset=0&limit=10`;
     // console.log(`api song search uri: ${trackSearchUri}`);
 
     const token = await getToken();

@@ -17,14 +17,8 @@ mongoose.connect(uri);
 const app = express();
 app.use(cors({
     credentials: true,
-    origin: [
-        'http://localhost:3000', 
-        'http://api.spotify.com'
-    ]
 }));
 app.use(express.json());
-
-// var allowList = ['http://api.spotify.com'];
 
 // session middleware
 const sess = {
