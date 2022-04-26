@@ -22,7 +22,6 @@ const usersSchema = new Schema({
         type: Boolean,
         required: true,
     },
-    // all of below filled in controller
     biography: {
         type: String, 
         default: '',

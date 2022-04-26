@@ -17,6 +17,13 @@ mongoose.connect(uri);
 const app = express();
 app.use(cors({
     credentials: true,
+    origin: [
+        'http://localhost:3000', 
+        'http://localhost:4000', 
+        'http://api.spotify.com',
+        'http://guileless-rabanadas-1bfb30.netlify.app',
+        'https://infinite-reef-07217.herokuapp.com'
+    ]
 }));
 app.use(express.json());
 

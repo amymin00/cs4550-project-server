@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 // Needs from frontend: [title (of post), author, song, text]
 const postsSchema = new Schema({
-    _id: String,
+    _id: String, // filled in controller
     title: {
         type: String,
         required: true,
@@ -26,12 +26,12 @@ const postsSchema = new Schema({
         immutable: true,
     },
     text: String,
-    likes: { // list of user ids, filled in controller
+    likes: { // list of user ids
         type: [String],
         required: true,
         default: [],
     }, 
-    comments: { // list of comment ids, filled in controller
+    comments: { // list of comment ids
         type: [String],
         required: true,
         comments: [],

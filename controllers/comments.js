@@ -11,12 +11,14 @@ const createComment = async (req, res) => {
 
 const findAllComments = async (req, res) => {
     const comments = await commentsDao.findAllComments();
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(comments);
 }
 
 const findComment = async (req, res) => {
     const commentToFind = req.params.id;
     const comment = await commentsDao.findComment(commentToFind);
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(comment);
 }
 

@@ -11,18 +11,21 @@ const createPost = async (req, res) => {
 
 const findAllPosts = async (req, res) => {
     const posts = await postsDao.findAllPosts();
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(posts);
 }
 
 const findPost = async (req, res) => {
     const postToFind = req.params.id;
     const post = await postsDao.findPost(postToFind);
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(post);
 }
 
 const findPostsByAuthor = async (req, res) => {
     const authorId = req.params.id;
     const posts = await postsDao.findPostsByAuthor(authorId);
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(posts);
 }
 
