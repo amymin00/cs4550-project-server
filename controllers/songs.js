@@ -8,5 +8,5 @@ const findSongs = async (req, res) => {
 };
 
 export default app => {
-    app.get('/api/search/songs/:query', findSongs);
+    app.get('/api/songs/search/:query', findSongs);
 };
