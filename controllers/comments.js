@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import * as commentsDao from '../daos/comments.js';
+import * as commentsDao from '../database/comments/commentsDao.js';
 
 const createComment = async (req, res) => {
     const newComment = req.body;

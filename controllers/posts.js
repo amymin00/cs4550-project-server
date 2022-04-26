@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import * as postsDao from '../daos/posts.js';
+import * as postsDao from '../database/posts/postsDao.js';
 
 const createPost = async (req, res) => {
     const newPost = req.body;
