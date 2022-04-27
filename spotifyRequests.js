@@ -3,6 +3,45 @@ import qs from 'qs';
 
 // let token = '';
 
+export const findSong = async songId => {
+    const findTrackUri = `https://api.spotify.com/v1/tracks/${songId}`;
+    // console.log(`api song search uri: ${findTrackUri}`);
+    const token = await getToken();
+
+    try {
+        const headers = {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        };
+        const { data } = await axios.get(findTrackUri, { headers });
+        // console.log(data);
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const searchForSongs = async query => {
+    const parsedQuery = query.replaceAll('-', '%20');
+    const trackSearchUri = `http://api.spotify.com/v1/search?q=${parsedQuery}&type=track&offset=0&limit=10`;
+    // console.log(`api song search uri: ${trackSearchUri}`);
+    const token = await getToken();
+
+    try {
+        const headers = {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        };
+        const { data } = await axios.get(trackSearchUri, { headers });
+        // console.log(data);
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 const getToken = async () => {
     var clientId = '68da8e6401df4e62b6f5cbe9447e0427'; // Your client id
     var clientSecret = 'e2fb605ff688447fad7a7cb9d06aad1d'; // Your secret
@@ -28,28 +67,6 @@ const getToken = async () => {
                                          );
         // console.log(response.data.access_token);
         return response.data.access_token;
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-export const searchForSongs = async query => {
-    const parsedQuery = query.replaceAll('-', '%20');
-
-    const trackSearchUri = `http://api.spotify.com/v1/search?q=${parsedQuery}&type=track&offset=0&limit=10`;
-    // console.log(`api song search uri: ${trackSearchUri}`);
-
-    const token = await getToken();
-
-    try {
-        const headers = {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        };
-        const { data } = await axios.get(trackSearchUri, { headers });
-        // console.log(data);
-        return data;
     } catch (err) {
         console.log(err);
     }
