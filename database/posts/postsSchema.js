@@ -20,7 +20,7 @@ const postsSchema = new Schema({
         required: true,
         immutable: true,
     }, 
-    song: {
+    song: { // spotify song id
         type: String,
         required: true,
         immutable: true,

@@ -29,6 +29,13 @@ const findPostsByAuthor = async (req, res) => {
     res.json(posts);
 }
 
+const findPostsBySong = async (req, res) => {
+    const songId = req.params.id;
+    const posts = await postsDao.findPostsBySong(songId);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(posts);
+}
+
 const updatePost = async (req, res) => {
     const postdIdToUpdate = req.params.id;
     const updatedPost = req.body;
@@ -47,6 +54,7 @@ export default app => {
     app.get('/api/posts', findAllPosts);
     app.get('/api/posts/:id', findPost);
     app.get('/api/posts/author/:id', findPostsByAuthor);
+    app.get('/api/posts/song/:id', findPostsBySong);
     app.put('/api/posts/:id', updatePost);
     app.delete('/api/posts/:id', deletePost);
 }

@@ -2,6 +2,7 @@ import commentsModel from './commentsModel.js';
 
 export const findAllComments = () => commentsModel.find();
 export const findComment = id => commentsModel.findById(id);
+export const findCommentsInIdList = ids => commentsModel.find({_id: {$in: ids}});
 export const findCommentsByAuthor = id => commentsModel.find({author: id});
 export const createComment = comment => commentsModel.create(comment);
 export const deleteComment = id => commentsModel.deleteOne({_id: id});

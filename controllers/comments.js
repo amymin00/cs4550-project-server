@@ -15,6 +15,20 @@ const findAllComments = async (req, res) => {
     res.json(comments);
 }
 
+const findCommentsInIdList = async (req, res) => {
+    const ids = req.body.comments;
+    const comments = await commentsDao.findCommentsInIdList(ids);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(comments);
+}
+
+const findCommentsByAuthor = async (req, res) => {
+    const authorId = req.params.id;
+    const comments = await commentsDao.findCommentsByAuthor(authorId);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(comments);
+}
+
 const findComment = async (req, res) => {
     const commentToFind = req.params.id;
     const comment = await commentsDao.findComment(commentToFind);
@@ -38,6 +52,8 @@ const deleteComment = async (req, res) => {
 export default app => {
     app.post('/api/comments', createComment);
     app.get('/api/comments', findAllComments);
+    app.post('/api/comments/post', findCommentsInIdList);
+    app.get('/api/comments/author/:id', findCommentsByAuthor);
     app.get('/api/comments/:id', findComment);
     app.put('/api/comments/:id', updateComment);
     app.delete('/api/comments/:id', deleteComment);
