@@ -17,6 +17,14 @@ const createUser = async (req, res) => {
     }
 };
 
+const updateCurrentUser = async (req, res) => {
+    const userId = req.session['currentUser']._id;
+    const updatedUser = req.body;
+    const status = await usersDao.updateUser(userId, updatedUser);
+    req.session['currentUser'] = updatedUser;
+    res.send(status);
+};
+
 const login = async (req, res) => {
     const existingUser = await usersDao.findUserByCredentials(req.body.username, req.body.password);
 
@@ -67,7 +75,7 @@ const findAllUsers = async (req, res) => {
 const findUserById = async (req, res) => {
     const userToFind = req.params.id;
     const user = await usersDao.findUserById(userToFind);
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "*");
     res.json(user);
 };
 
@@ -139,6 +147,7 @@ export default app => {
     app.post('/api/login', login);
     app.post('/api/logout', logout);
     app.post('/api/profile', profile);
+    app.put('/api/profile', updateCurrentUser);
 
     app.get('/api/users', findAllUsers);
     app.get('/api/users/followers/:id', findUsersFollowers);
