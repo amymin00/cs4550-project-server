@@ -60,34 +60,29 @@ const profile = (req, res) => {
 const findUsersFollowers = async (req, res) => {
     const user = await usersDao.findUserById(req.params.id);
     const followers = await usersDao.findUsers(user.followers);
-    res.header("Access-Control-Allow-Origin", "*");
     res.json(followers);
 };
 
 const findUsersFollowing = async (req, res) => {
     const user = await usersDao.findUserById(req.params.id);
     const following = await usersDao.findUsers(user.following);
-    res.header("Access-Control-Allow-Origin", "*");
     res.json(following);
 };
 
 const findAllUsers = async (req, res) => {
     const users = await usersDao.findAllUsers();
-    res.header("Access-Control-Allow-Origin", "*");
     res.json(users);
 };
 
 const findUserById = async (req, res) => {
     const userToFind = req.params.id;
     const user = await usersDao.findUserById(userToFind);
-    // res.header("Access-Control-Allow-Origin", "*");
     res.json(user);
 };
 
 const findUserByUsername = async (req, res) => {
     const username = req.params.username;
     const user = await usersDao.findUserByUsername(username);
-    res.header("Access-Control-Allow-Origin", "*");
     res.json(user);
 };
 
@@ -96,7 +91,6 @@ const findUserByCredentials = async (req, res) => {
     const username = crendentials.username;
     const password = crendentials.password;
     const user = await usersDao.findUserByCredentials(username, password);
-    res.header("Access-Control-Allow-Origin", "*");
 
     if (user) {
         res.sendStatus(200);
