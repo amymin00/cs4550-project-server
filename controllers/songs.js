@@ -19,6 +19,7 @@ const findSongsById = async (req, res) => {
         const songData = await findSong(id);
         songs.push(songData);
     }));
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(songs);
 }
 
