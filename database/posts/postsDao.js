@@ -1,8 +1,8 @@
 import postsModel from './postsModel.js';
 
-export const findAllPosts = () => postsModel.find().sort({timestamp: -1}).limit(10);
+export const findAllPosts = () => postsModel.find().sort({timestamp: -1}).limit(15);
 export const findPost = id => postsModel.findById(id);
-export const findPostsByAuthor = id => postsModel.find({author: id});
+export const findPostsByAuthor = id => postsModel.find({author: id}).sort({timestamp: -1}).limit(15);
 export const findPostsBySong = id => postsModel.find({song: id});
 export const createPost = post => postsModel.create(post);
 export const deletePost = id => postsModel.deleteOne({_id: id});

@@ -20,9 +20,14 @@ const createUser = async (req, res) => {
 const updateCurrentUser = async (req, res) => {
     const userId = req.session['currentUser']._id;
     const updatedUser = req.body;
-    const status = await usersDao.updateUser(userId, updatedUser);
-    req.session['currentUser'] = updatedUser;
-    res.send(status);
+
+    if (!updatedUser.name || !updatedUser.biography || !updatedUser.password || !updatedUser.email) {
+        res.send(503);
+    } else {
+        const status = await usersDao.updateUser(userId, updatedUser);
+        req.session['currentUser'] = updatedUser;
+        res.send(status);
+    }
 };
 
 const login = async (req, res) => {
