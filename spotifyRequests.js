@@ -5,7 +5,6 @@ import qs from 'qs';
 
 export const findSong = async songId => {
     const findTrackUri = `https://api.spotify.com/v1/tracks/${songId}`;
-    // console.log(`api song search uri: ${findTrackUri}`);
     const token = await getToken();
 
     try {
@@ -15,7 +14,6 @@ export const findSong = async songId => {
             Authorization: `Bearer ${token}`,
         };
         const { data } = await axios.get(findTrackUri, { headers });
-        // console.log(data);
         return data;
     } catch (err) {
         console.log(err);
@@ -25,7 +23,6 @@ export const findSong = async songId => {
 export const searchForSongs = async query => {
     const parsedQuery = query.replaceAll('-', '%20');
     const trackSearchUri = `http://api.spotify.com/v1/search?q=${parsedQuery}&type=track&offset=0&limit=10`;
-    // console.log(`api song search uri: ${trackSearchUri}`);
     const token = await getToken();
 
     try {
@@ -35,7 +32,6 @@ export const searchForSongs = async query => {
             Authorization: `Bearer ${token}`,
         };
         const { data } = await axios.get(trackSearchUri, { headers });
-        // console.log(data);
         return data;
     } catch (err) {
         console.log(err);
@@ -65,33 +61,8 @@ const getToken = async () => {
                                             qs.stringify(data),
                                             headers
                                          );
-        // console.log(response.data.access_token);
         return response.data.access_token;
     } catch (err) {
         console.log(err);
     }
 };
-
-// const wrapInRetry = (apiCallFunc) => {
-//     return async (...args) => {
-//         try {
-//             const response = await apiCallFunc(args);
-//             return response;
-//         } catch (err) {
-//             if (err.response.status === 401) {
-//                 try {
-//                     // store new token in application memory via global variable
-//                     token = await getToken();
-//                     const response = await apiCallFunc(args);
-//                     return response;
-//                 } catch (innerErr) {
-//                     console.log(innerErr);
-//                 }
-//             } else {
-//                 console.log(err);
-//             }
-//         }
-//     };
-// };
-
-// wrapInRetry(searchForSongs);
