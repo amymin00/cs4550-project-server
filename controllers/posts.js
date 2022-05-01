@@ -81,7 +81,7 @@ export default app => {
     app.post('/api/posts/author/list', findPostsByAuthorsList);
     app.get('/api/posts/song/id/:id', findPostsBySong);
     app.post('/api/posts/song/list', findPostsBySongsList);
-    app.post('/api/posts/song/popular', findPopularSongs);
+    app.get('/api/posts/song/popular', findPopularSongs);
     app.put('/api/posts/:id', updatePost);
     app.delete('/api/posts/:id', deletePost);
 }

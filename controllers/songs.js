@@ -14,11 +14,22 @@ const findSongs = async (req, res) => {
 
 const findSongsById = async (req, res) => {
     const ids = req.body.songs;
-    const songs = [];
-    await Promise.all(ids.map(async id => {
-        const songData = await findSong(id);
-        songs.push(songData);
-    }));
+    const ordered = req.body.ordered;
+    let songs = [];
+
+    if (ordered) {
+        await Promise.all(ids.map(async (id, index) => {
+            const songData = await findSong(id);
+            songs.push({index: index, song: songData});
+        }));
+        songs.sort((s1, s2) => (s1.index > s2.index) ? 1 : -1);
+        songs = songs.map(s => s.song);
+    } else {
+        await Promise.all(ids.map(async id => {
+            const songData = await findSong(id);
+            songs.push(songData);
+        }));
+    }
     res.header("Access-Control-Allow-Origin", "*");
     res.json(songs);
 }

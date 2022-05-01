@@ -16,7 +16,11 @@ export const findSong = async songId => {
         const { data } = await axios.get(findTrackUri, { headers });
         return data;
     } catch (err) {
-        console.log(err);
+        if (err.response.headers['retry-after']) {
+            console.log(`Too many spotify requests! try again after ${err.response.headers['retry-after']} seconds`);
+        } else {
+            console.log(err.response);
+        }
     }
 };
 
