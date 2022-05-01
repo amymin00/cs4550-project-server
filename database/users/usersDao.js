@@ -1,6 +1,6 @@
 import usersModel from './usersModel.js';
 
-export const findAllUsers = () => usersModel.find().sort({$natural: -1}).limit(15);
+export const findAllUsers = () => usersModel.find().sort({$natural: -1}).limit(10);
 export const findUserById = id => usersModel.findById(id);
 export const findUserByUsername = username => usersModel.findOne({username: username});
 export const findUserByCredentials = (username, password) => usersModel.findOne({

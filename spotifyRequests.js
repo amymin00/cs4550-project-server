@@ -5,7 +5,6 @@ import qs from 'qs';
 
 export const findSong = async songId => {
     const findTrackUri = `https://api.spotify.com/v1/tracks/${songId}`;
-    // console.log(`api song search uri: ${findTrackUri}`);
     const token = await getToken();
 
     try {
@@ -18,7 +17,11 @@ export const findSong = async songId => {
         // console.log(data);
         return data;
     } catch (err) {
-        console.log(err);
+        if (err.response.headers['retry-after']) {
+            console.log(`Too many spotify requests! try again after ${err.response.headers['retry-after']} seconds`);
+        } else {
+            console.log(err.response);
+        }
     }
 };
 

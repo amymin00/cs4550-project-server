@@ -29,11 +29,32 @@ const findPostsByAuthor = async (req, res) => {
     res.json(posts);
 }
 
+const findPostsByAuthorsList = async (req, res) => {
+    const authorIds = req.body.authors;
+    const posts = await postsDao.findPostsByAuthorsList(authorIds);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(posts);
+}
+
 const findPostsBySong = async (req, res) => {
     const songId = req.params.id;
     const posts = await postsDao.findPostsBySong(songId);
     res.header("Access-Control-Allow-Origin", "*");
     res.json(posts);
+}
+
+const findPostsBySongsList = async (req, res) => {
+    const songIds = req.body.songs;
+    const songs = await postsDao.findPostsBySongsList(songIds);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(songs);
+}
+
+const findPopularSongs = async (req, res) => {
+    const data = await postsDao.findPopularSongs();
+    const songs = data.map(d => d.song);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(songs);
 }
 
 const updatePost = async (req, res) => {
@@ -53,8 +74,11 @@ export default app => {
     app.post('/api/posts', createPost);
     app.get('/api/posts', findAllPosts);
     app.get('/api/posts/:id', findPost);
-    app.get('/api/posts/author/:id', findPostsByAuthor);
-    app.get('/api/posts/song/:id', findPostsBySong);
+    app.get('/api/posts/author/id/:id', findPostsByAuthor);
+    app.post('/api/posts/author/list', findPostsByAuthorsList);
+    app.get('/api/posts/song/id/:id', findPostsBySong);
+    app.post('/api/posts/song/list', findPostsBySongsList);
+    app.post('/api/posts/song/popular', findPopularSongs);
     app.put('/api/posts/:id', updatePost);
     app.delete('/api/posts/:id', deletePost);
 }

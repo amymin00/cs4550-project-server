@@ -3,13 +3,13 @@ import { findSong, searchForSongs } from "../spotifyRequests.js";
 const findSongById = async (req, res) => {
     const data = await findSong(req.params.id);
     res.header("Access-Control-Allow-Origin", "*");
-    res.json(data);
+    res.json();
 };
 
 const findSongs = async (req, res) => {
     const data = await searchForSongs(req.params.query);
     res.header("Access-Control-Allow-Origin", "*");
-    res.json(data);
+    res.json([]);
 };
 
 const findSongsById = async (req, res) => {
