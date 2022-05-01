@@ -6,6 +6,7 @@ const createPost = async (req, res) => {
     newPost._id = nanoid();
     newPost.timestamp = (new Date()).getTime();
     const insertedPost = await postsDao.createPost(newPost);
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(insertedPost);
 }
 
@@ -61,12 +62,14 @@ const updatePost = async (req, res) => {
     const postdIdToUpdate = req.params.id;
     const updatedPost = req.body;
     const status = await postsDao.updatePost(postdIdToUpdate, updatedPost);
+    res.header("Access-Control-Allow-Origin", "*");
     res.send(status);
 }
 
 const deletePost = async (req, res) => {
     const postdIdToDelete = req.params.id;
     const status = await postsDao.deletePost(postdIdToDelete);
+    res.header("Access-Control-Allow-Origin", "*");
     res.send(status);
 }   
 

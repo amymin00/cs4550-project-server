@@ -7,6 +7,7 @@ export const findUserByCredentials = (username, password) => usersModel.findOne(
     username: username,
     password: password,
 });
+export const findFollowingsPosts = () => usersModel.find();
 export const findUsers = userIds => usersModel.find({_id: {$in: userIds}});
 export const createUser = user => usersModel.create(user);
 export const deleteUser = id => usersModel.deleteOne({_id: id});
