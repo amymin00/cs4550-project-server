@@ -9,7 +9,7 @@ export const findPostsBySongsList = songIds => postsModel.find({song: {$in: song
 export const findPopularSongs = () => postsModel.aggregate([
     { $group: {_id: '$song', numPosts: {$sum: 1}} },
     { $sort: {numPosts: -1} },
-    { $limit: 15 },
+    { $limit: 10 },
     { $project: {_id: 0, 'song': '$_id'} },
 ]);
 export const createPost = post => postsModel.create(post);
