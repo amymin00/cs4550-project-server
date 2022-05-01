@@ -122,14 +122,14 @@ const deleteUser = async (req, res) => {
     const followers = await usersDao.findUsers(user.followers);
     await Promise.all(followers.map(async u => {
         const newFollowing = u.following.filter(f => f._id !== userId);
-        await usersDao.updateUser(userToUpdate, {following: newFollowing});
+        await usersDao.updateUser(user, {following: newFollowing});
     }));
 
     // remove user from others' followers list
     const following = await usersDao.findUsers(user.following);
     await Promise.all(following.map(async u => {
         const newFollowers = u.followers.filter(f => f._id !== userId);
-        await usersDao.updateUser(userToUpdate, {followers: newFollowers});
+        await usersDao.updateUser(user, {followers: newFollowers});
     }));
 
     // update posts made by user
