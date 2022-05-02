@@ -6,7 +6,7 @@ import * as commentsDao from '../database/comments/commentsDao.js';
 const createUser = async (req, res) => {
     const newUser = req.body;
     const existingUser = await usersDao.findUserByUsername(newUser.username);
-
+    res.header("Access-Control-Allow-Credentials", true);
     if (existingUser) {
         res.send(403);
     } else {
@@ -20,9 +20,9 @@ const createUser = async (req, res) => {
 const updateCurrentUser = async (req, res) => {
     const userId = req.session['currentUser']._id;
     const updatedUser = req.body;
-
-    if (updatedUser.name === "" || 
-        updatedUser.password === "" || 
+    res.header("Access-Control-Allow-Credentials", true);
+    if (updatedUser.name === "" ||
+        updatedUser.password === "" ||
         updatedUser.email === "") {
         res.send(503);
     } else {
@@ -34,7 +34,7 @@ const updateCurrentUser = async (req, res) => {
 
 const login = async (req, res) => {
     const existingUser = await usersDao.findUserByCredentials(req.body.username, req.body.password);
-
+    res.header("Access-Control-Allow-Credentials", true);
     if (existingUser) {
         req.session['currentUser'] = existingUser;
         return res.send(existingUser);
@@ -42,7 +42,7 @@ const login = async (req, res) => {
         return res.send(503);
     }
 };
-  
+
 const logout = (req, res) => {
     req.session.destroy();
     res.send(200);
@@ -50,6 +50,7 @@ const logout = (req, res) => {
 
 const profile = (req, res) => {
     const currentUser = req.session['currentUser'];
+    res.header("Access-Control-Allow-Credentials", true);
     if (currentUser) {
         res.json(currentUser);
     } else {
