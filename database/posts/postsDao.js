@@ -3,9 +3,9 @@ import postsModel from './postsModel.js';
 export const findAllPosts = () => postsModel.find().sort({timestamp: -1}).limit(15);
 export const findPost = id => postsModel.findById(id);
 export const findPostsByAuthor = id => postsModel.find({author: id}).sort({timestamp: -1}).limit(15);
-export const findPostsByAuthorsList = userIds => postsModel.find({author: {$in: userIds}});
-export const findPostsBySong = id => postsModel.find({song: id});
-export const findPostsBySongsList = songIds => postsModel.find({song: {$in: songIds}});
+export const findPostsByAuthorsList = userIds => postsModel.find({author: {$in: userIds}}).sort({timestamp: -1});
+export const findPostsBySong = id => postsModel.find({song: id}).sort({timestamp: -1});
+export const findPostsBySongsList = songIds => postsModel.find({song: {$in: songIds}}).sort({timestamp: -1});
 export const findPopularSongs = () => postsModel.aggregate([
     { $group: {_id: '$song', numPosts: {$sum: 1}} },
     { $sort: {numPosts: -1} },
