@@ -6,6 +6,7 @@ const createComment = async (req, res) => {
     newComment._id = nanoid();
     newComment.timestamp = (new Date()).getTime();
     const insertedComment = await commentsDao.createComment(newComment);
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(insertedComment);
 }
 
@@ -40,12 +41,14 @@ const updateComment = async (req, res) => {
     const commentdIdToUpdate = req.params.id;
     const updatedComment = req.body;
     const status = await commentsDao.updateComment(commentdIdToUpdate, updatedComment);
+    res.header("Access-Control-Allow-Origin", "*");
     res.send(status);
 }
 
 const deleteComment = async (req, res) => {
     const commentdIdToDelete = req.params.id;
     const status = await commentsDao.deleteComment(commentdIdToDelete);
+    res.header("Access-Control-Allow-Origin", "*");
     res.send(status);
 }   
 

@@ -8,7 +8,7 @@ const createUser = async (req, res) => {
     const existingUser = await usersDao.findUserByUsername(newUser.username);
 
     if (existingUser) {
-        res.sendStatus(403);
+        res.send(403);
     } else {
         newUser._id = nanoid();
         const insertedUser = await usersDao.createUser(newUser);
@@ -20,9 +20,16 @@ const createUser = async (req, res) => {
 const updateCurrentUser = async (req, res) => {
     const userId = req.session['currentUser']._id;
     const updatedUser = req.body;
-    const status = await usersDao.updateUser(userId, updatedUser);
-    req.session['currentUser'] = updatedUser;
-    res.send(status);
+
+    if (updatedUser.name === "" || 
+        updatedUser.password === "" || 
+        updatedUser.email === "") {
+        res.send(503);
+    } else {
+        const status = await usersDao.updateUser(userId, updatedUser);
+        req.session['currentUser'] = updatedUser;
+        res.send(status);
+    }
 };
 
 const login = async (req, res) => {
@@ -32,13 +39,13 @@ const login = async (req, res) => {
         req.session['currentUser'] = existingUser;
         return res.send(existingUser);
     } else {
-        return res.sendStatus(503);
+        return res.send(503);
     }
 };
   
 const logout = (req, res) => {
     req.session.destroy();
-    res.sendStatus(200);
+    res.send(200);
 }
 
 const profile = (req, res) => {
@@ -46,7 +53,7 @@ const profile = (req, res) => {
     if (currentUser) {
         res.json(currentUser);
     } else {
-        res.sendStatus(503);
+        res.send(503);
     }
 };
 
@@ -75,7 +82,7 @@ const findAllUsers = async (req, res) => {
 const findUserById = async (req, res) => {
     const userToFind = req.params.id;
     const user = await usersDao.findUserById(userToFind);
-    // res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(user);
 };
 
@@ -91,12 +98,11 @@ const findUserByCredentials = async (req, res) => {
     const username = crendentials.username;
     const password = crendentials.password;
     const user = await usersDao.findUserByCredentials(username, password);
-    res.header("Access-Control-Allow-Origin", "*");
 
     if (user) {
-        res.sendStatus(200);
+        res.send(200);
     } else {
-        res.sendStatus(403);
+        res.send(403);
     }
 };
 
@@ -104,6 +110,7 @@ const updateUser = async (req, res) => {
     const userToUpdate = req.params.id;
     const updatedUser = req.body;
     const status = await usersDao.updateUser(userToUpdate, updatedUser);
+    res.header("Access-Control-Allow-Origin", "*");
     res.send(status);
 };
 
@@ -115,14 +122,14 @@ const deleteUser = async (req, res) => {
     const followers = await usersDao.findUsers(user.followers);
     await Promise.all(followers.map(async u => {
         const newFollowing = u.following.filter(f => f._id !== userId);
-        await usersDao.updateUser(userToUpdate, {following: newFollowing});
+        await usersDao.updateUser(user, {following: newFollowing});
     }));
 
     // remove user from others' followers list
     const following = await usersDao.findUsers(user.following);
     await Promise.all(following.map(async u => {
         const newFollowers = u.followers.filter(f => f._id !== userId);
-        await usersDao.updateUser(userToUpdate, {followers: newFollowers});
+        await usersDao.updateUser(user, {followers: newFollowers});
     }));
 
     // update posts made by user
